@@ -1,0 +1,26 @@
+import numpy as np
+from obstacle import Firebeam, Coin
+
+def initialiseFirebeams(screen):
+	firebeams = []
+	x = screen.getScreenwidth() / 2
+	while x < screen.getGamewidth():
+		y = np.random.randint(0, screen.getScreenheight() - screen.getScreenheight() / 4)
+		shape = np.random.randint(4)
+		firebeam = Firebeam(x, y, shape)
+		firebeams += [firebeam]
+		firebeam.placeObstacle(screen)
+		x += np.absolute(np.random.normal(screen.getScreenwidth() / 2, screen.getScreenwidth() / 2))
+	return firebeams
+
+def initialiseCoins(screen):
+	coins = []
+	x = screen.getScreenwidth() / 4
+	while x < screen.getGamewidth():
+		y = np.random.randint(0, screen.getScreenheight() - 1)
+		coin = Coin(x, y, 0)
+		coins += [coin]
+		coin.placeObstacle(screen)
+		x += np.absolute(np.random.normal(screen.getScreenwidth() / 50, screen.getScreenwidth() / 50))
+	return coins
+
