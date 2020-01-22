@@ -24,10 +24,10 @@ def alarmHandler(signum, frame):
     """Handling timeouts."""
     raise AlarmException
 
-def input_to(getch, refresh_rate):
+def input_to(getch, refresh_time):
     """Taking input from user."""
     signal.signal(signal.SIGALRM, alarmHandler)
-    signal.setitimer(signal.ITIMER_REAL, 1 / refresh_rate)
+    signal.setitimer(signal.ITIMER_REAL, refresh_time)
     try:
         text = getch()
         signal.alarm(0)

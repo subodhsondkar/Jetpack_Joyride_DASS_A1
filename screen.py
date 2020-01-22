@@ -23,7 +23,7 @@ class Screen():
 	def __init__(self, gamewidth):
 		self.__screenheight, self.__screenwidth = os.popen("stty size", "r").read().split()
 		self.__screenheight = int(self.__screenheight) - 8
-		self.__screenwidth = int(self.__screenwidth) - 2
+		self.__screenwidth = int(self.__screenwidth) - 3
 		self.__gamewidth = gamewidth
 		self.__game = []
 		self.__start = 0
@@ -63,7 +63,7 @@ class Screen():
 			print(Back.BLACK + " ", end = "")
 		print(Back.WHITE)
 		print_string = " SCORE: " + str(hero.getScore()) + " | LIVES: " + str(hero.getLives()) + " | TIME REMAINING: " + str(int(time_remaining))
-		print(Back.BLACK + Fore.WHITE + print_string, end = "")
+		print(Back.BLACK + Fore.GREEN + print_string, end = "")
 		for i in range(self.__screenwidth + 2 - len(print_string)):
 			print(Back.BLACK + " ", end = "")
 		print(Back.WHITE)

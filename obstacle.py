@@ -26,35 +26,47 @@ class Firebeam(Obstacle):
 					try:
 						screen.setGame(self._base_y + i, self._base_x - i, "F")
 					except:
-						print(self._shape, self._base_x - i, self._base_y + i)
+						pass
 				elif self._shape is 1:
 					try:
 						screen.setGame(self._base_y + i, self._base_x, "F")
 					except:
-						print(self._shape, self._base_x, self._base_y + i)
+						pass
 				elif self._shape is 2:
 					try:
 						screen.setGame(self._base_y + i, self._base_x + i, "F")
 					except:
-						print(self._shape, self._base_x + i, self._base_y + i)
+						pass
 				else:
 					try:
 						screen.setGame(self._base_y, self._base_x + i, "F")
 					except:
-						print(self._shape, self._base_x + i, self._base_y)
+						pass
 		return
 
 	def deactivateObstacle(self, screen):
 		if self._activated is 1:
 			for i in range(int(screen.getScreenheight() / 4)):
 				if self._shape is 0:
-					screen.setGame(self._base_y + i, self._base_x - i, "H")
+					try:
+						screen.setGame(self._base_y + i, self._base_x - i, "H")
+					except:
+						pass
 				elif self._shape is 1:
-					screen.setGame(self._base_y + i, self._base_x, "H")
+					try:
+						screen.setGame(self._base_y + i, self._base_x, "H")
+					except:
+						pass
 				elif self._shape is 2:
-					screen.setGame(self._base_y + i, self._base_x + i, "H")
+					try:
+						screen.setGame(self._base_y + i, self._base_x + i, "H")
+					except:
+						pass
 				else:
-					screen.setGame(self._base_y, self._base_x + i, "H")
+					try:
+						screen.setGame(self._base_y, self._base_x + i, "H")
+					except:
+						pass
 		self._activated = 0
 		return
 

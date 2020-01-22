@@ -4,8 +4,9 @@ class Hero():
 	def __init__(self, screen, x, y):
 		self._base_x = x
 		self._base_y = y
-		self._x_velocity = 2
-		self._y_velocity = 0
+		self._velocity_x = 2
+		self._velocity_y = 0
+		self._acceleration_y = 2
 		self._score = 0
 		self._lives = 3
 		self._shield = 0
@@ -44,10 +45,13 @@ class Hero():
 		elif self._lives > 1:
 			self._lives -= 1
 		else:
-			print("Score:", self._score)
-			input()
-			exit()
+			self.gameOver()
 		return
+
+	def gameOver(self):
+		print("Score:", self._score, "| Lives:", self._lives)
+		input()
+		exit()
 
 	def incrementPoints(self, points):
 		self._score += points
@@ -91,34 +95,34 @@ class Hero():
 			if coin.getActivated() is 1 and self.collisionCheck(screen, coin, 0, 0) == 1:
 				break
 
-	def move(self, screen, firebeams, coins, character, refresh_rate):
+	def move(self, screen, firebeams, coins, character, refresh_time):
 		self.removeHero(screen)
-		if self._shield == 1 and time.time() - self._shield_time > self._shield_recharge_time:
+		if self._shield is 1 and time.time() - self._shield_time > self._shield_recharge_time:
 			self.deactivateShield()
 		if character in ["w", "W"]:
-			self._y_velocity -= 1 / refresh_rate
+			self._velocity_y -= self._acceleration_y * refresh_time
 		else:
-			self._y_velocity += 1 / refresh_rate
+			self._velocity_y += refresh_time
 			if character in ["a", "A"]:
-				self._base_x -= self._x_velocity
+				self._base_x -= self._velocity_x
 			elif character in ["d", "D"]:
-				self._base_x += self._x_velocity
+				self._base_x += self._velocity_x
 			elif character in [" "] and time.time() - self._shield_time > self._shield_on_time:
 				self._shield_time = time.time()
 				self.activateShield()
 		if self._base_x < screen.getStart() + 1:
 			self._base_x = screen.getStart() + 1
-		elif self._base_x > screen.getStart() + screen.getScreenwidth() - 3:
-			self._base_x = screen.getStart() + screen.getScreenwidth() - 3
+		elif self._base_x > screen.getStart() + screen.getScreenwidth() - 4:
+			self._base_x = screen.getStart() + screen.getScreenwidth() - 4
 		self.firebeamsCollisionCheck(firebeams, screen)
 		self.coinsCollisionCheck(coins, screen)
-		self._base_y += self._y_velocity
+		self._base_y += self._velocity_y
 		if self._base_y < 2:
 			self._base_y = 2
-			self._y_velocity = 0
+			self._velocity_y = 0
 		elif self._base_y > screen.getScreenheight() - 1:
 			self._base_y = screen.getScreenheight() - 1
-			self._y_velocity = 0
+			self._velocity_y = 0
 		self.firebeamsCollisionCheck(firebeams, screen)
 		self.coinsCollisionCheck(coins, screen)
 		self.placeHero(screen)

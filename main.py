@@ -1,4 +1,3 @@
-import os
 import time
 from screen import Screen
 from hero import Hero
@@ -19,9 +18,9 @@ Game end
 BONUS dragon
 '''
 
-total_time = 45
-refresh_rate = 20
-screen = Screen(500)
+total_time = 20
+refresh_time = 0.05
+screen = Screen(250)
 firebeams = initialiseFirebeams(screen)
 coins = initialiseCoins(screen)
 mandalorian = Hero(screen, screen.getScreenwidth() / 4, screen.getScreenheight() - 1)
@@ -32,15 +31,19 @@ start_time = time.time()
 previous_time = start_time
 while True:
 	current_time = time.time()
-	if current_time - previous_time >= 1 / refresh_rate:
-		os.system("clear")
-		screen.incrementStart()
-		screen.printScreen(mandalorian, 45 - time.time() + start_time)
+	time_remaining = total_time - time.time() + start_time
+	if time_remaining < 0:
+		mandalorian.gameOver()
+	if current_time - previous_time >= refresh_time:
+		print( "\033[0;0H" )
+		if screen.getStart() < screen.getGamewidth() - screen.getScreenwidth() + 2:
+			screen.incrementStart()
+		screen.printScreen(mandalorian, time_remaining)
 		previous_time = time.time()
 		input_taken = 0
-	input = input_to(get, refresh_rate)
+	input = input_to(get, refresh_time)
 	if input is None:
 		input = ""
 	if input_taken == 0:
-		mandalorian.move(screen, firebeams, coins, input, refresh_rate)
+		mandalorian.move(screen, firebeams, coins, input, refresh_time)
 		input_taken = 1
