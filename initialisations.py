@@ -21,6 +21,6 @@ def initialiseCoins(screen):
 		coin = Coin(x, y, 0)
 		coins += [coin]
 		coin.placeObstacle(screen)
-		x += np.absolute(np.random.normal(screen.getScreenwidth() / 50, screen.getScreenwidth() / 50))
+		x += np.absolute(np.random.normal(screen.getScreenwidth() / 10, screen.getScreenwidth() / 10))
 	return coins
 

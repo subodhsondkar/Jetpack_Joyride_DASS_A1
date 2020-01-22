@@ -17,6 +17,7 @@ mapping = {
 	"H": Back.WHITE,
 	"F": Back.RED,
 	"C": Back.YELLOW,
+	"B": Back.BLACK
 }
 
 class Screen():

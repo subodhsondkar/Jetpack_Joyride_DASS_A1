@@ -2,33 +2,33 @@ import time
 from screen import Screen
 from hero import Hero
 from obstacle import Firebeam, Coin, Magnet
-from bullet import Bullet
+#from bullet import Bullet
 from initialisations import initialiseFirebeams, initialiseCoins
 from input import Get, input_to
 
 '''
 To Do List:
 
-OOPS: just check once
-Bullet: shooting firebeam, coins, magnets, boss enemy
+Bullet: different approach
 Magnet: configuring x_velocity and back to normal when magnet is no longer present
-Speed boost: what is combined effect of magnet and speed boost
 Boss enemy (dragon): his bullet is an ice ball. More hai
 Game end
-BONUS dragon
 '''
 
-total_time = 20
+total_time = 60
 refresh_time = 0.05
-screen = Screen(250)
+screen = Screen(150)
 firebeams = initialiseFirebeams(screen)
 coins = initialiseCoins(screen)
-mandalorian = Hero(screen, screen.getScreenwidth() / 4, screen.getScreenheight() - 1)
+bullets = []
+mandalorian = Hero(screen, screen.getScreenwidth() / 4, screen.getScreenheight() - 1, refresh_time)
 screen.printScreen(mandalorian, total_time)
 get = Get()
 input_taken = 0
 start_time = time.time()
 previous_time = start_time
+times = []
+z = 0
 while True:
 	current_time = time.time()
 	time_remaining = total_time - time.time() + start_time
@@ -45,5 +45,8 @@ while True:
 	if input is None:
 		input = ""
 	if input_taken == 0:
-		mandalorian.move(screen, firebeams, coins, input, refresh_time)
+		times += [-time.time()]
+		refresh_time = mandalorian.move(screen, firebeams, coins, bullets, input, refresh_time)
+		times[z] += time.time()
+		z += 1
 		input_taken = 1
