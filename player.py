@@ -127,7 +127,9 @@ class Player():
 		if self._speed_boost == 1 and time.time() - self._speed_boost_time > self._speed_boost_on_time:
 			self._speed_boost = 0
 			refresh_time /= 2
-		if character in ["w", "W"]:
+		if character in ["q", "Q"]:
+			self.gameOver()
+		elif character in ["w", "W"]:
 			self._velocity_y -= self._acceleration_y * refresh_time
 		else:
 			self._velocity_y += 1
