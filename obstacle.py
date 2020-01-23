@@ -20,19 +20,19 @@ class Obstacle():
 
 class Firebeam(Obstacle):
 	def placeObstacle(self, screen):
-		if self._activated is 1:
+		if self._activated == 1:
 			for i in range(int(screen.getScreenheight() / 4)):
-				if self._shape is 0:
+				if self._shape == 0:
 					try:
 						screen.setGame(self._base_y + i, self._base_x - i, "F")
 					except:
 						pass
-				elif self._shape is 1:
+				elif self._shape == 1:
 					try:
 						screen.setGame(self._base_y + i, self._base_x, "F")
 					except:
 						pass
-				elif self._shape is 2:
+				elif self._shape == 2:
 					try:
 						screen.setGame(self._base_y + i, self._base_x + i, "F")
 					except:
@@ -45,19 +45,19 @@ class Firebeam(Obstacle):
 		return
 
 	def deactivateObstacle(self, screen):
-		if self._activated is 1:
+		if self._activated == 1:
 			for i in range(int(screen.getScreenheight() / 4)):
-				if self._shape is 0:
+				if self._shape == 0:
 					try:
 						screen.setGame(self._base_y + i, self._base_x - i, "H")
 					except:
 						pass
-				elif self._shape is 1:
+				elif self._shape == 1:
 					try:
 						screen.setGame(self._base_y + i, self._base_x, "H")
 					except:
 						pass
-				elif self._shape is 2:
+				elif self._shape == 2:
 					try:
 						screen.setGame(self._base_y + i, self._base_x + i, "H")
 					except:
@@ -70,33 +70,48 @@ class Firebeam(Obstacle):
 		self._activated = 0
 		return
 
-	def collision(self, screen, hero):
-		hero.killed()
+	def collision(self, screen, player):
+		player.killed()
 		self.deactivateObstacle(screen)
 		return
 
 class Coin(Obstacle):
 	def placeObstacle(self, screen):
-		if self._activated is 1:
+		if self._activated == 1:
 			screen.setGame(self._base_y, self._base_x, "C")
 		return
 
 	def deactivateObstacle(self, screen):
-		if self._activated is 1:
+		if self._activated == 1:
 			screen.setGame(self._base_y, self._base_x, "H")
 		self._activated = 0
 		return
 
-	def collision(self, screen, hero):
-		hero.incrementPoints(1)
+	def collision(self, screen, player):
+		player.incrementPoints(10)
 		self.deactivateObstacle(screen)
 		return
 
 class Magnet(Obstacle):
+
 	''' Concept ke in its range,
 	either uppar ya neeche gravity jitna force aayega.
 	Hence, in case of downward force,
 	you can't go up even after clicking the "W" key.
 	In case of upward force,
 	you can't go down, basically free fall jesa. '''
-	pass
+
+	def placeObstacle(self, screen):
+		if self._activated == 1:
+			screen.setGame(self._base_y, self._base_x, "M")
+		return
+
+	def deactivateObstacle(self, screen):
+		if self._activated == 1:
+			screen.setGame(self._base_y, self._base_x, "H")
+		self._activated = 0
+		return
+
+	def collision(self, screen, player):
+		self.deactivateObstacle(screen)
+		return

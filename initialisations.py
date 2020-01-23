@@ -1,5 +1,5 @@
 import numpy as np
-from obstacle import Firebeam, Coin
+from obstacle import Firebeam, Coin, Magnet
 
 def initialiseFirebeams(screen):
 	firebeams = []
@@ -24,3 +24,13 @@ def initialiseCoins(screen):
 		x += np.absolute(np.random.normal(screen.getScreenwidth() / 10, screen.getScreenwidth() / 10))
 	return coins
 
+def initialiseMagnets(screen):
+	magnets = []
+	x = screen.getScreenwidth()
+	while x < screen.getGamewidth():
+		y = np.random.randint(0, screen.getScreenheight() - 1)
+		magnet = Magnet(x, y, 0)
+		magnets += [magnet]
+		magnet.placeObstacle(screen)
+		x += np.absolute(np.random.normal(screen.getScreenwidth(), screen.getScreenwidth()))
+	return magnets

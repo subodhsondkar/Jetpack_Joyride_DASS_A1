@@ -1,15 +1,15 @@
 import time
 from bullet import Bullet
 
-class Hero():
+class Player():
 	def __init__(self, screen, x, y, refresh_time):
 		self._base_x = x
 		self._base_y = y
 		self._velocity_x = 2 / refresh_time
 		self._velocity_y = 0
 		self._acceleration_y = 3
-		self._score = 0
 		self._lives = 3
+		self._score = 0
 		self._shield = 0
 		self._shield_on_time = 5
 		self._shield_recharge_time = 10
@@ -17,7 +17,7 @@ class Hero():
 		self._speed_boost = 0
 		self._speed_boost_on_time = 5
 		self._speed_boost_time = time.time()
-		self.placeHero(screen)
+		self.placePlayer(screen)
 		return
 
 	def getBase_x(self):
@@ -44,7 +44,7 @@ class Hero():
 		return
 
 	def killed(self):
-		if self._shield is 1:
+		if self._shield == 1:
 			return
 		else:
 			self._lives -= 1
@@ -61,14 +61,14 @@ class Hero():
 		self._score += points
 		return
 
-	def removeHero(self, screen):
+	def removePlayer(self, screen):
 		screen.setGame(int(self._base_y) - 2, int(self._base_x), "H")
 		screen.setGame(int(self._base_y) - 1, int(self._base_x), "H")
 		screen.setGame(int(self._base_y) - 1, int(self._base_x) + 1, "H")
 		screen.setGame(int(self._base_y), int(self._base_x), "H")
 		return
 
-	def placeHero(self, screen):
+	def placePlayer(self, screen):
 		screen.setGame(int(self._base_y) - 2, int(self._base_x), "O")
 		screen.setGame(int(self._base_y) - 1, int(self._base_x), "|")
 		screen.setGame(int(self._base_y) - 1, int(self._base_x) + 1, "<")
@@ -83,29 +83,35 @@ class Hero():
 
 	def firebeamsCollisionCheck(self, firebeams, screen):
 		for firebeam in firebeams:
-			if firebeam.getActivated() is 1:
+			if firebeam.getActivated() == 1:
 				for i in range(int(screen.getScreenheight() / 4)):
-					if firebeam.getShape() is 0 and self.collisionCheck(screen, firebeam, -i, i) == 1:
+					if firebeam.getShape() == 0 and self.collisionCheck(screen, firebeam, -i, i) == 1:
 						break
-					elif firebeam.getShape() is 1 and self.collisionCheck(screen, firebeam, 0, i) == 1:
+					elif firebeam.getShape() == 1 and self.collisionCheck(screen, firebeam, 0, i) == 1:
 						break
-					elif firebeam.getShape() is 2 and self.collisionCheck(screen, firebeam, i, i) == 1:
+					elif firebeam.getShape() == 2 and self.collisionCheck(screen, firebeam, i, i) == 1:
 						break
-					elif firebeam.getShape() is 3 and self.collisionCheck(screen, firebeam, i, 0) == 1:
+					elif firebeam.getShape() == 3 and self.collisionCheck(screen, firebeam, i, 0) == 1:
 						break
 		return
 
 	def coinsCollisionCheck(self, coins, screen):
 		for coin in coins:
-			if coin.getActivated() is 1 and self.collisionCheck(screen, coin, 0, 0) == 1:
+			if coin.getActivated() == 1 and self.collisionCheck(screen, coin, 0, 0) == 1:
 				break
 		return
 
-	def move(self, screen, firebeams, coins, bullets, character, refresh_time):
-		self.removeHero(screen)
-		if self._shield is 1 and time.time() - self._shield_time > self._shield_on_time:
+	def magnetsCollisionCheck(self, magnets, screen):
+		for magnet in magnets:
+			if magnet.getActivated() == 1 and self.collisionCheck(screen, magnet, 0, 0) == 1:
+				break
+		return
+
+	def move(self, screen, firebeams, coins, magnets, bullets, character, refresh_time):
+		self.removePlayer(screen)
+		if self._shield == 1 and time.time() - self._shield_time > self._shield_on_time:
 			self.deactivateShield()
-		if self._speed_boost is 1 and time.time() - self._speed_boost_time > self._speed_boost_on_time:
+		if self._speed_boost == 1 and time.time() - self._speed_boost_time > self._speed_boost_on_time:
 			self._speed_boost = 0
 			refresh_time /= 2
 		if character in ["w", "W"]:
@@ -118,7 +124,7 @@ class Hero():
 				self._base_x += self._velocity_x * refresh_time
 			elif character in ["s", "S"]:
 				bullets += [Bullet(self, refresh_time)]
-			elif character in ["p", "P"] and self._speed_boost is 0:
+			elif character in ["p", "P"] and self._speed_boost == 0:
 				self._speed_boost_time = time.time()
 				self._speed_boost = 1
 				refresh_time *= 2
@@ -131,6 +137,7 @@ class Hero():
 			self._base_x = screen.getStart() + screen.getScreenwidth() - 4
 		self.firebeamsCollisionCheck(firebeams, screen)
 		self.coinsCollisionCheck(coins, screen)
+		self.magnetsCollisionCheck(magnets, screen)
 		self._base_y += self._velocity_y
 		if self._base_y < 2:
 			self._base_y = 2
@@ -140,8 +147,17 @@ class Hero():
 			self._velocity_y = 0
 		self.firebeamsCollisionCheck(firebeams, screen)
 		self.coinsCollisionCheck(coins, screen)
-		self.placeHero(screen)
+		self.magnetsCollisionCheck(magnets, screen)
+		self.placePlayer(screen)
 		for bullet in bullets:
-			if bullet.getActivated() is 1:
-				bullet.move(screen, firebeams, coins, refresh_time)
+			if bullet.getActivated() == 1:
+				bullet.move(screen, firebeams, coins, magnets, self, refresh_time)
 		return refresh_time
+
+class Hero(Player):
+	def __init__(self, screen, x, y, refresh_time):
+		pass		
+
+class Enemy(Player):
+	def __init__(self, screen):
+		pass
