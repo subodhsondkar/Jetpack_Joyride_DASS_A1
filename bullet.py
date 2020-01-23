@@ -21,7 +21,7 @@ class Bullet():
 		screen.setGame(int(self._base_y) + j, int(self._base_x) + i, "H")
 		self._activated = 0
 
-	def move(self, screen, firebeams, coins, magnets, player, refresh_time):
+	def move(self, screen, firebeams, coins, magnets, player, enemy, refresh_time):
 		screen.setGame(int(self._base_y), int(self._base_x), "H")
 		#if self._direction == 1:
 		if True:
@@ -61,6 +61,8 @@ class Bullet():
 									self.deactivateBullet(screen, i * self._direction, j)
 									dead_bullet = 1
 									break
+					if int(self._base_x) + i * self._direction + 1 == enemy.getBase_x() and int(self._base_y) + j == enemy.getBase_y() or int(self._base_x) + i * self._direction + 1 == enemy.getBase_x() and int(self._base_y) + j == enemy.getBase_y() - 1 or int(self._base_x) + i * self._direction + 1 == enemy.getBase_x() - 1 and int(self._base_y) + j == enemy.getBase_y() - 1  or int(self._base_x) + i * self._direction + 1 == enemy.getBase_x() and int(self._base_y) + j == enemy.getBase_y() - 2:
+						enemy.killed(player)
 			self._base_x += self._velocity_x * refresh_time
 			if self._base_x > screen.getScreenwidth() + screen.getStart() - self._velocity_x * refresh_time - 3 or self._base_x < 0 or self._base_y > screen.getScreenheight() - 1 or self._base_y < 0:
 				self.deactivateBullet(screen, 0, 0)

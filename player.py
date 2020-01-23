@@ -22,14 +22,19 @@ class Player():
 	def getLives(self):
 		return self._lives
 
-	def killed(self):
+	def killed(self, player):
 		if self._shield == 1:
 			return
 		else:
 			self._lives -= 1
 			if self._lives == 0:
-				self.gameOver()
+				self.gameOver(player)
 		return
+
+	def gameOver(self, player):
+		print("Score:", player._score, "| Lives:", player._lives)
+		input("Press enter key to continue.")
+		exit()
 
 class Enemy(Player):
 	def __init__(self, screen, x, y):
@@ -95,11 +100,6 @@ class Hero(Player):
 	def deactivateShield(self):
 		self._shield = 0
 		return
-
-	def gameOver(self):
-		print("Score:", self._score, "| Lives:", self._lives)
-		input("Press enter key to continue.")
-		exit()
 
 	def incrementPoints(self, points):
 		self._score += points
@@ -218,5 +218,5 @@ class Hero(Player):
 		enemy.move(screen, self, refresh_time, bullets)
 		for bullet in bullets:
 			if bullet.getActivated() == 1:
-				bullet.move(screen, firebeams, coins, magnets, self, refresh_time)
+				bullet.move(screen, firebeams, coins, magnets, self, enemy, refresh_time)
 		return

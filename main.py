@@ -9,7 +9,6 @@ from input import Get, input_to
 To Do List:
 
 Boss enemy (dragon): his bullet is an ice ball. More hai
-Game end
 '''
 
 total_time = 20
@@ -29,7 +28,7 @@ while True:
 	current_time = time.time()
 	time_remaining = total_time - time.time() + start_time
 	if time_remaining < 0:
-		mandalorian.gameOver()
+		mandalorian.gameOver(player)
 	if current_time - previous_time >= refresh_time:
 		print( "\033[0;0H" )
 		screen.printScreen(mandalorian, time_remaining)
