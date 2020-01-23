@@ -1,5 +1,4 @@
 # Jetpack Joyride
-<<<<<<< HEAD
 
 ## Objective
 The game must simulate a basic version the infamous mobile game Jetpack Joyride. We need to defeat the boss before the time runs out. The objective of the game is to get the most points by collecting coins and destroying obstacles before killing the boss.
@@ -57,6 +56,3 @@ score = 10 * coin_collect + 2 * magnet_collect + 5 * magnet_shot + 16 * firebeam
 
 ## Boss Enemy
 - The boss enemy can adjust his position according to the Mandalorian and shoots bullets aimed at the Mandalorian.
-=======
-Bash terminal implementation of the famous mobile game Jetpack Joyride with even more features!
->>>>>>> ccfd5b85d71f7fe935287490fd9bef8d952e3eb6
