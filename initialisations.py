@@ -3,7 +3,7 @@ from obstacle import Firebeam, Coin, Magnet
 
 def initialiseFirebeams(screen):
 	firebeams = []
-	x = screen.getScreenwidth() / 2
+	x = screen.getScreenwidth() / 2 + 1
 	while x < screen.getGamewidth():
 		y = np.random.randint(0, screen.getScreenheight() - screen.getScreenheight() / 4)
 		shape = np.random.randint(4)
@@ -15,7 +15,7 @@ def initialiseFirebeams(screen):
 
 def initialiseCoins(screen):
 	coins = []
-	x = screen.getScreenwidth() / 4
+	x = screen.getScreenwidth() / 2
 	while x < screen.getGamewidth():
 		y = np.random.randint(0, screen.getScreenheight() - 1)
 		coin = Coin(x, y, 0)

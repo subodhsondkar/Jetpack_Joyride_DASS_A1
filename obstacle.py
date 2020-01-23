@@ -44,7 +44,11 @@ class Firebeam(Obstacle):
 						pass
 		return
 
-	def deactivateObstacle(self, screen):
+	def collision(self, screen, player, is_player):
+		if is_player == 1:
+			player.killed()
+		else:
+			player.incrementPoints(16)
 		if self._activated == 1:
 			for i in range(int(screen.getScreenheight() / 4)):
 				if self._shape == 0:
@@ -70,26 +74,18 @@ class Firebeam(Obstacle):
 		self._activated = 0
 		return
 
-	def collision(self, screen, player):
-		player.killed()
-		self.deactivateObstacle(screen)
-		return
-
 class Coin(Obstacle):
 	def placeObstacle(self, screen):
 		if self._activated == 1:
 			screen.setGame(self._base_y, self._base_x, "C")
 		return
 
-	def deactivateObstacle(self, screen):
+	def collision(self, screen, player, is_player):
+		if is_player == 1:
+			player.incrementPoints(10)
 		if self._activated == 1:
 			screen.setGame(self._base_y, self._base_x, "H")
 		self._activated = 0
-		return
-
-	def collision(self, screen, player):
-		player.incrementPoints(10)
-		self.deactivateObstacle(screen)
 		return
 
 class Magnet(Obstacle):
@@ -106,12 +102,12 @@ class Magnet(Obstacle):
 			screen.setGame(self._base_y, self._base_x, "M")
 		return
 
-	def deactivateObstacle(self, screen):
+	def collision(self, screen, player, is_player):
+		if is_player == 1:
+			player.incrementPoints(2)
+		else:
+			player.incrementPoints(5)
 		if self._activated == 1:
 			screen.setGame(self._base_y, self._base_x, "H")
 		self._activated = 0
-		return
-
-	def collision(self, screen, player):
-		self.deactivateObstacle(screen)
 		return

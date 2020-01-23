@@ -47,11 +47,9 @@ class Screen():
 		self.__game[i][j] = new_character
 		return
 
-	def incrementStart(self):
-		self.__start += 1
-		return
-
 	def printScreen(self, player, time_remaining):
+		if self.__start < self.__gamewidth - self.__screenwidth + 2:
+			self.__start += 1
 		for i in range(self.__screenwidth + 2):
 			print(Back.BLACK + " ", end = "")
 		print(Back.WHITE)

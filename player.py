@@ -77,7 +77,7 @@ class Player():
 
 	def collisionCheck(self, screen, obstacle, i, j):
 		if int(self._base_x) == obstacle.getBase_x() + i and int(self._base_y) == obstacle.getBase_y() + j or int(self._base_x) == obstacle.getBase_x() + i and int(self._base_y) - 1 == obstacle.getBase_y() + j or int(self._base_x) == obstacle.getBase_x() + i and int(self._base_y) - 2 == obstacle.getBase_y() + j or int(self._base_x) + 1 == obstacle.getBase_x() + i and int(self._base_y) == obstacle.getBase_y() + j or int(self._base_x) + 1 == obstacle.getBase_x() + i and int(self._base_y) - 1 == obstacle.getBase_y() + j or int(self._base_x) + 1 == obstacle.getBase_x() + i and int(self._base_y) - 2 == obstacle.getBase_y() + j:
-			obstacle.collision(screen, self)
+			obstacle.collision(screen, self, 1)
 			return 1
 		return 0
 

@@ -27,35 +27,34 @@ class Bullet():
 			for j in range(int(self._velocity_y * refresh_time) + 1):
 				for coin in coins:
 					if coin.getActivated() == 1 and int(self._base_x) + i + 1 == coin.getBase_x() and int(self._base_y) + j == coin.getBase_y():
-						coin.deactivateObstacle(screen)
+						coin.collision(screen, player, 0)
 						self.deactivateBullet(screen, i, j)
 						dead_bullet = 1
 				for magnet in magnets:
 					if magnet.getActivated() == 1 and int(self._base_x) + i + 1 == magnet.getBase_x() and int(self._base_y) + j == magnet.getBase_y():
-						magnet.deactivateObstacle(screen)
+						magnet.collision(screen, player, 0)
 						self.deactivateBullet(screen, i, j)
-						player.incrementPoints(4)
 						dead_bullet = 1
 				for firebeam in firebeams:
 					if firebeam.getActivated() == 1:
 						for k in range(int(screen.getScreenheight() / 4)):
 							if firebeam.getShape() == 0 and int(self._base_x) + i + 1 == firebeam.getBase_x() - k and int(self._base_y) + j == firebeam.getBase_y() + k:
-								firebeam.deactivateObstacle(screen)
+								firebeam.collision(screen, player, 0)
 								self.deactivateBullet(screen, i, j)
 								dead_bullet = 1
 								break
 							elif firebeam.getShape() == 1 and int(self._base_x) + i + 1 == firebeam.getBase_x() and int(self._base_y) + j == firebeam.getBase_y() + k:
-								firebeam.deactivateObstacle(screen)
+								firebeam.collision(screen, player, 0)
 								self.deactivateBullet(screen, i, j)
 								dead_bullet = 1
 								break
 							elif firebeam.getShape() == 2 and int(self._base_x) + i + 1 == firebeam.getBase_x() + k and int(self._base_y) + j == firebeam.getBase_y() + k:
-								firebeam.deactivateObstacle(screen)
+								firebeam.collision(screen, player, 0)
 								self.deactivateBullet(screen, i, j)
 								dead_bullet = 1
 								break
 							elif firebeam.getShape() == 3 and int(self._base_x) + i + 1 == firebeam.getBase_x() + k and int(self._base_y) + j == firebeam.getBase_y():
-								firebeam.deactivateObstacle(screen)
+								firebeam.collision(screen, player, 0)
 								self.deactivateBullet(screen, i, j)
 								dead_bullet = 1
 								break
