@@ -5,15 +5,9 @@ from obstacle import Firebeam, Coin, Magnet
 from initialisations import initialiseFirebeams, initialiseCoins, initialiseMagnets
 from input import Get, input_to
 
-'''
-To Do List:
-
-Boss enemy (dragon): his bullet is an ice ball. More hai
-'''
-
-total_time = 20
+total_time = 100
 refresh_time = 0.05
-screen = Screen(150)
+screen = Screen(1000)
 mandalorian = Hero(screen, screen.getScreenwidth() / 4, screen.getScreenheight() - 1, refresh_time)
 firebeams = initialiseFirebeams(screen)
 coins = initialiseCoins(screen)

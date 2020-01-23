@@ -168,7 +168,7 @@ class Hero(Player):
 			self._speed_boost = 1
 			refresh_time /= 2
 		if character in ["q", "Q"]:
-			self.gameOver()
+			self.gameOver(self)
 		elif character in ["w", "W"]:
 			self._velocity_y -= self._acceleration_y * refresh_time * self._speed_boost
 		else:
