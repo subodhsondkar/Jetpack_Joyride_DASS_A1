@@ -8,6 +8,7 @@ from input import Get, input_to
 '''
 To Do List:
 
+Speed boost: locha
 Boss enemy (dragon): his bullet is an ice ball. More hai
 Game end
 '''

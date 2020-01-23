@@ -1,10 +1,8 @@
 class Obstacle():
-	def __init__(self, x, y, shape):
+	def __init__(self, x, y):
 		self._base_x = int(x)
 		self._base_y = int(y)
-		self._shape = shape
 		self._activated = 1
-		self._on_time = 0
 		return
 
 	def getBase_x(self):
@@ -30,7 +28,51 @@ class Obstacle():
 		self._on_time = 0
 		return
 
+class Coin(Obstacle):
+	def __init__(self, x, y):
+		super().__init__(x, y)
+		return
+
+	def placeObstacle(self, screen):
+		if self._activated == 1:
+			screen.setGame(self._base_y, self._base_x, "C")
+		return
+
+	def collision(self, screen, player, is_player):
+		if is_player == 1:
+			player.incrementPoints(10)
+		if self._activated == 1:
+			screen.setGame(self._base_y, self._base_x, "H")
+		self._activated = 0
+		return
+
+class Magnet(Obstacle):
+	def __init__(self, x, y):
+		super().__init__(x, y)
+		self._on_time = 0
+		return
+
+	def placeObstacle(self, screen):
+		if self._activated == 1:
+			screen.setGame(self._base_y, self._base_x, "M")
+		return
+
+	def collision(self, screen, player, is_player):
+		if is_player == 1:
+			player.incrementPoints(2)
+		else:
+			player.incrementPoints(5)
+		if self._activated == 1:
+			screen.setGame(self._base_y, self._base_x, "H")
+		self._activated = 0
+		return
+
 class Firebeam(Obstacle):
+	def __init__(self, x, y, shape):
+		super().__init__(x, y)
+		self._shape = shape
+		return
+
 	def placeObstacle(self, screen):
 		if self._activated == 1:
 			for i in range(int(screen.getScreenheight() / 4)):
@@ -83,43 +125,5 @@ class Firebeam(Obstacle):
 						screen.setGame(self._base_y, self._base_x + i, "H")
 					except:
 						pass
-		self._activated = 0
-		return
-
-class Coin(Obstacle):
-	def placeObstacle(self, screen):
-		if self._activated == 1:
-			screen.setGame(self._base_y, self._base_x, "C")
-		return
-
-	def collision(self, screen, player, is_player):
-		if is_player == 1:
-			player.incrementPoints(10)
-		if self._activated == 1:
-			screen.setGame(self._base_y, self._base_x, "H")
-		self._activated = 0
-		return
-
-class Magnet(Obstacle):
-
-	''' Concept ke in its range,
-	either uppar ya neeche gravity jitna force aayega.
-	Hence, in case of downward force,
-	you can't go up even after clicking the "W" key.
-	In case of upward force,
-	you can't go down, basically free fall jesa. '''
-
-	def placeObstacle(self, screen):
-		if self._activated == 1:
-			screen.setGame(self._base_y, self._base_x, "M")
-		return
-
-	def collision(self, screen, player, is_player):
-		if is_player == 1:
-			player.incrementPoints(2)
-		else:
-			player.incrementPoints(5)
-		if self._activated == 1:
-			screen.setGame(self._base_y, self._base_x, "H")
 		self._activated = 0
 		return

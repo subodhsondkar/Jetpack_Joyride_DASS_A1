@@ -8,11 +8,11 @@ def signum(var):
 
 class Player():
 	def __init__(self, screen, x, y, refresh_time):
-		self._base_x = x
-		self._base_y = y
+		self._base_x = x #
+		self._base_y = y #
 		self._velocity_y = 0
 		self._acceleration_y = 3 / refresh_time
-		self._lives = 3
+		self._lives = 3 #
 		self._score = 0
 		self._shield = 0
 		self._shield_on_time = 5
@@ -182,8 +182,9 @@ class Player():
 
 class Hero(Player):
 	def __init__(self, screen, x, y, refresh_time):
-		pass		
+		pass
 
 class Enemy(Player):
 	def __init__(self, screen):
 		pass
+
