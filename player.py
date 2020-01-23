@@ -1,13 +1,17 @@
 import time
 from bullet import Bullet
 
+def signum(var):
+	if var < 0: return -1
+	elif var > 0: return 1
+	else: return 0
+
 class Player():
 	def __init__(self, screen, x, y, refresh_time):
 		self._base_x = x
 		self._base_y = y
-		self._velocity_x = 2 / refresh_time
 		self._velocity_y = 0
-		self._acceleration_y = 3
+		self._acceleration_y = 3 / refresh_time
 		self._lives = 3
 		self._score = 0
 		self._shield = 0
@@ -107,6 +111,15 @@ class Player():
 				break
 		return
 
+	def magnetsEffect(self, magnets, refresh_time):
+		for magnet in magnets:
+			if magnet.getActivated() == 1 and (self._base_x - magnet.getBase_x()) ** 2 + (self._base_y - magnet.getBase_y()) ** 2 <= 200:
+				self._velocity_y += signum(magnet.getBase_y() - self._base_y + 1)
+				self._base_x += signum(magnet.getBase_x() - self._base_x) * magnet.getOn_time() * 0.05
+				magnet.enter()
+			else:
+				magnet.exit()
+
 	def move(self, screen, firebeams, coins, magnets, bullets, character, refresh_time):
 		self.removePlayer(screen)
 		if self._shield == 1 and time.time() - self._shield_time > self._shield_on_time:
@@ -117,11 +130,11 @@ class Player():
 		if character in ["w", "W"]:
 			self._velocity_y -= self._acceleration_y * refresh_time
 		else:
-			self._velocity_y += refresh_time
+			self._velocity_y += 1
 			if character in ["a", "A"]:
-				self._base_x -= self._velocity_x * refresh_time
+				self._base_x -= 2
 			elif character in ["d", "D"]:
-				self._base_x += self._velocity_x * refresh_time
+				self._base_x += 2
 			elif character in ["s", "S"]:
 				bullets += [Bullet(self, refresh_time)]
 			elif character in ["p", "P"] and self._speed_boost == 0:
@@ -138,7 +151,7 @@ class Player():
 		self.firebeamsCollisionCheck(firebeams, screen)
 		self.coinsCollisionCheck(coins, screen)
 		self.magnetsCollisionCheck(magnets, screen)
-		self._base_y += self._velocity_y
+		self._base_y += self._velocity_y * refresh_time
 		if self._base_y < 2:
 			self._base_y = 2
 			self._velocity_y = 0
@@ -148,6 +161,17 @@ class Player():
 		self.firebeamsCollisionCheck(firebeams, screen)
 		self.coinsCollisionCheck(coins, screen)
 		self.magnetsCollisionCheck(magnets, screen)
+		self.magnetsEffect(magnets, refresh_time)
+		if self._base_x < screen.getStart() + 1:
+			self._base_x = screen.getStart() + 1
+		elif self._base_x > screen.getStart() + screen.getScreenwidth() - 4:
+			self._base_x = screen.getStart() + screen.getScreenwidth() - 4
+		if self._base_y < 2:
+			self._base_y = 2
+			self._velocity_y = 0
+		elif self._base_y > screen.getScreenheight() - 1:
+			self._base_y = screen.getScreenheight() - 1
+			self._velocity_y = 0
 		self.placePlayer(screen)
 		for bullet in bullets:
 			if bullet.getActivated() == 1:

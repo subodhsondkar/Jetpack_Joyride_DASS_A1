@@ -8,14 +8,13 @@ from input import Get, input_to
 '''
 To Do List:
 
-Magnet: configuring x_velocity and back to normal when magnet is no longer present
 Boss enemy (dragon): his bullet is an ice ball. More hai
 Game end
 '''
 
-total_time = 30
+total_time = 45
 refresh_time = 0.05
-screen = Screen(250)
+screen = Screen(400)
 mandalorian = Player(screen, screen.getScreenwidth() / 4, screen.getScreenheight() - 1, refresh_time)
 firebeams = initialiseFirebeams(screen)
 coins = initialiseCoins(screen)

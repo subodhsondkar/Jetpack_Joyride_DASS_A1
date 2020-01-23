@@ -4,6 +4,7 @@ class Obstacle():
 		self._base_y = int(y)
 		self._shape = shape
 		self._activated = 1
+		self._on_time = 0
 		return
 
 	def getBase_x(self):
@@ -17,6 +18,17 @@ class Obstacle():
 
 	def getActivated(self):
 		return self._activated
+
+	def getOn_time(self):
+		return self._on_time
+
+	def enter(self):
+		self._on_time += 1
+		return
+
+	def exit(self):
+		self._on_time = 0
+		return
 
 class Firebeam(Obstacle):
 	def placeObstacle(self, screen):
