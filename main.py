@@ -1,6 +1,6 @@
 import time
 from screen import Screen
-from player import Player
+from player import Hero, Enemy
 from obstacle import Firebeam, Coin, Magnet
 from initialisations import initialiseFirebeams, initialiseCoins, initialiseMagnets
 from input import Get, input_to
@@ -8,18 +8,18 @@ from input import Get, input_to
 '''
 To Do List:
 
-Speed boost: locha
 Boss enemy (dragon): his bullet is an ice ball. More hai
 Game end
 '''
 
-total_time = 45
+total_time = 20
 refresh_time = 0.05
-screen = Screen(400)
-mandalorian = Player(screen, screen.getScreenwidth() / 4, screen.getScreenheight() - 1, refresh_time)
+screen = Screen(150)
+mandalorian = Hero(screen, screen.getScreenwidth() / 4, screen.getScreenheight() - 1, refresh_time)
 firebeams = initialiseFirebeams(screen)
 coins = initialiseCoins(screen)
 magnets = initialiseMagnets(screen)
+boss = Enemy(screen, screen.getGamewidth() - 2, screen.getScreenheight() - 1)
 bullets = []
 get = Get()
 input_taken = 0
@@ -39,5 +39,5 @@ while True:
 	if input == None:
 		input = ""
 	if input_taken == 0:
-		refresh_time = mandalorian.move(screen, firebeams, coins, magnets, bullets, input, refresh_time)
+		mandalorian.move(screen, boss, firebeams, coins, magnets, bullets, input, refresh_time)
 		input_taken = 1

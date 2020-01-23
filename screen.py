@@ -3,8 +3,8 @@ from colorama import Back, Fore
 import numpy as np
 
 mapping = {
-	# hero
-	# enemy
+	# Hero
+	# Enemy
 	"H": Back.WHITE, # Hawa
 	"F": Back.RED, # Firebeam
 	"C": Back.YELLOW, # Coin
@@ -49,7 +49,7 @@ class Screen():
 
 	def printScreen(self, player, time_remaining):
 		if self.__start < self.__gamewidth - self.__screenwidth + 2:
-			self.__start += 1
+			self.__start += player.getSpeed_boost()
 		for i in range(self.__screenwidth + 2):
 			print(Back.BLACK + " ", end = "")
 		print(Back.WHITE)
@@ -67,7 +67,6 @@ class Screen():
 				print(Back.BLUE + " ", end = "")
 			print(Back.BLACK + "  ", end = "")
 			print(Back.WHITE)
-
 		for i in range(self.__screenheight):
 			print(Back.BLACK + "  ", end = "")
 			for j in range(self.__screenwidth - 2):
