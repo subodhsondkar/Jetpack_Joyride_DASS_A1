@@ -28,7 +28,7 @@ while True:
 	current_time = time.time()
 	time_remaining = total_time - time.time() + start_time
 	if time_remaining < 0:
-		mandalorian.gameOver(player)
+		mandalorian.gameOver(mandalorian)
 	if current_time - previous_time >= refresh_time:
 		print( "\033[0;0H" )
 		screen.printScreen(mandalorian, time_remaining)

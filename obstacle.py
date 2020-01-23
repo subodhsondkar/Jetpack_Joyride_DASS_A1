@@ -100,7 +100,7 @@ class Firebeam(Obstacle):
 
 	def collision(self, screen, player, is_player):
 		if is_player == 1:
-			player.killed()
+			player.killed(player)
 		else:
 			player.incrementPoints(16)
 		if self._activated == 1:
